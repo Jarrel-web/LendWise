@@ -140,6 +140,20 @@ Key response sections:
 - **Risk**: default probability from model output.
 - **Safe**: non-default probability (`1 - risk`).
 
+## Screenshots
+
+### Dashboard Overview
+![Dashboard Overview](assets/Screenshot%202026-03-04%20204632.png)
+
+### Applicant Input and Decision Brief
+![Applicant Input and Decision Brief](assets/Screenshot%202026-03-04%20204708.png)
+
+### Model Comparison and Metrics
+![Model Comparison and Metrics](assets/Screenshot%202026-03-04%20204725.png)
+
+### Confusion Matrix and Policy Output
+![Confusion Matrix and Policy Output](assets/Screenshot%202026-03-04%20204735.png)
+
 ## Important Note
 
 This is an educational/learning project for model understanding and explainability.  
