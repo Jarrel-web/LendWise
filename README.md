@@ -1,30 +1,41 @@
 # LendWise
 
-LendWise is a full-stack loan risk assessment project built to test and strengthen my understanding of core machine learning concepts, especially:
+[![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white)](https://scikit-learn.org/)
+[![Recharts](https://img.shields.io/badge/Recharts-FF4B4B?style=for-the-badge)](https://recharts.org/)
 
+Full-stack loan risk assessment project to test and strengthen my understanding of machine learning concepts from **SC4000 Machine Learning**.
+
+Current model focus:
 - Decision Tree
 - Naive Bayes
 - K-NN
 
-This project is part of my SC4000 Machine Learning learning journey.  
-In newer updates, I will test and integrate additional models from the course.
+Planned next steps:
+- Integrate and evaluate more SC4000 models in future updates.
 
-## Project Goals
+## Why This Project
 
-- Apply multiple ML models to the same lending problem.
-- Compare model behavior and performance using metrics and confusion matrices.
-- Translate model probabilities into business actions (`Grant` / `Deny`) using cost-based decision policy.
-- Build an explainable dashboard for model outputs and decision rationale.
+LendWise is built as a learning-first system to connect ML theory with practical implementation:
 
-## Current Stack
+- Compare multiple models on the same task.
+- Inspect performance using metrics and confusion matrices.
+- Convert probabilities into actionable business decisions (`Grant` / `Deny`).
+- Explain model output clearly in a dashboard.
 
-- Backend: FastAPI + scikit-learn model artifacts (`.pkl`)
-- Frontend: Next.js + TypeScript + Recharts
-- Data artifacts:
-  - `backend/data/model_metrics.json`
-  - `backend/data/confusion_matrices.json`
+## Tech Stack
 
-## Repository Structure
+| Layer | Tools |
+|---|---|
+| Backend | FastAPI, scikit-learn, pandas |
+| Frontend | Next.js, TypeScript, Recharts |
+| Model Artifacts | `.pkl` models in `backend/models/` |
+| Evaluation Artifacts | `backend/data/model_metrics.json`, `backend/data/confusion_matrices.json` |
+
+## Project Structure
 
 ```text
 backend/
@@ -52,25 +63,25 @@ frontend/
   lib/
 ```
 
-## How It Works
+## ML Flow In This Project
 
-1. Backend loads pre-trained models from `backend/models`.
-2. `/predict` receives applicant input.
-3. Each model outputs `P(default|x)` (shown in UI as `Risk`).
-4. System computes weighted ensemble probability (weighted by model ROC-AUC from `model_metrics.json`).
-5. Cost policy compares:
+1. Load pre-trained models from `backend/models/`.
+2. Receive applicant input at `POST /predict`.
+3. Get per-model risk probability (`P(default|x)`), shown in UI as **Risk**.
+4. Compute weighted ensemble risk (weights from ROC-AUC in `model_metrics.json`).
+5. Apply cost policy:
    - `cost_grant = p_default * LGD * loan_amount`
    - `cost_deny = (1 - p_default) * opportunity_profit_rate * loan_amount`
-6. API returns:
-   - model-level predictions
+6. Return:
+   - model predictions
    - final decision policy
-   - evaluation metrics
+   - metrics snapshot
    - confusion matrices
-   - manual review flag/reasons for borderline cases
+   - manual review flag + reasons for borderline cases
 
-## Quick Start
+## Run Locally
 
-## 1) Backend
+### Backend
 
 ```bash
 cd backend
@@ -78,9 +89,9 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload
 ```
 
-Backend runs at: `http://127.0.0.1:8000`
+Backend URL: `http://127.0.0.1:8000`
 
-## 2) Frontend
+### Frontend
 
 ```bash
 cd frontend
@@ -89,9 +100,9 @@ cp .env.example .env.local
 npm run dev
 ```
 
-Frontend runs at: `http://localhost:3000`
+Frontend URL: `http://localhost:3000`
 
-Default backend URL is configured in `frontend/.env.example`:
+Default frontend backend target:
 
 ```env
 BACKEND_API_URL=http://127.0.0.1:8000
@@ -118,23 +129,25 @@ Example request:
 }
 ```
 
-Response includes:
-
-- `predictions`: per-model probabilities and decisions
-- `decision_policy`: final recommendation + expected costs + review flag
+Key response sections:
+- `predictions`: per-model risk/safe probabilities + decisions
+- `decision_policy`: final recommendation + cost analysis + review flag
 - `evaluation_metrics`: loaded from `model_metrics.json`
 - `confusion_matrices`: loaded from `confusion_matrices.json`
 
-## Notes
+## Terminology
 
-- `Risk` in the UI corresponds to model default probability.
-- `Safe` corresponds to non-default probability.
-- This is a learning-focused project for model comparison and explainability, not a production credit underwriting system.
+- **Risk**: default probability from model output.
+- **Safe**: non-default probability (`1 - risk`).
+
+## Important Note
+
+This is an educational/learning project for model understanding and explainability.  
+It is not a production-ready credit underwriting system.
 
 ## Roadmap
 
-- Add more SC4000 models (e.g., SVM, Logistic Regression, Random Forest, Boosting).
-- Add probability calibration comparison across models.
+- Add more SC4000 models (e.g., Logistic Regression, SVM, Random Forest, Boosting).
+- Compare calibrated vs uncalibrated probabilities.
 - Add experiment tracking for model versions and metrics.
-- Add model selection strategies beyond ROC-AUC weighted ensemble.
-
+- Explore alternative ensemble and decision strategies beyond ROC-AUC weighting.
