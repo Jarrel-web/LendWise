@@ -1,0 +1,50 @@
+{
+  "KNN": {
+    "labels": [
+      "Negative",
+      "Positive"
+    ],
+    "matrix": [
+      [
+        16,
+        44
+      ],
+      [
+        22,
+        118
+      ]
+    ]
+  },
+  "NaiveBayes": {
+    "labels": [
+      "Negative",
+      "Positive"
+    ],
+    "matrix": [
+      [
+        26,
+        34
+      ],
+      [
+        40,
+        100
+      ]
+    ]
+  },
+  "DecisionTree": {
+    "labels": [
+      "Negative",
+      "Positive"
+    ],
+    "matrix": [
+      [
+        28,
+        32
+      ],
+      [
+        48,
+        92
+      ]
+    ]
+  }
+}

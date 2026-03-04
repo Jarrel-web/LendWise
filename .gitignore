@@ -1,0 +1,20 @@
+# OS / Editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Python virtual environments
+.venv/
+venv/
+env/
+
+# Logs
+*.log
+
+# Root-level env files
+.env
+.env.local
+.env.*.locaL
+
+# Keep backend/frontend specific rules in their own .gitignore files
